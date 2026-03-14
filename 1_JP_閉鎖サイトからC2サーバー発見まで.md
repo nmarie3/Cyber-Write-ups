@@ -10,12 +10,12 @@
 
 mvjfkakfkfkaiai[.]comにアクセスすると、404エラーが返ってくる。
 
-![alt text](images\DeadtoC2images/error404.png)
+![alt text](images/DeadtoC2images/error404.png)
 
 興味深い。サーバー自体は生きているのに、何が置かれているのか。<br>
 勘でWayback Machineをもう一度確認してみると、URLのプレフィックス結果がいくつかヒットした。（今現在、.jsファイルの数はさらに増えている。）
 
-![alt text](images\DeadtoC2images/mvj_wayback.png)
+![alt text](images/DeadtoC2images/mvj_wayback.png)
 
 当時確認した3つのファイルはこちら：<br>
 ・mvjfkakfkfkaiai[.]com/fasfttt.js<br>
@@ -25,7 +25,7 @@ mvjfkakfkfkaiai[.]comにアクセスすると、404エラーが返ってくる�
 これらにどんなコードが仕込まれているか確かめる時が来た。それぞれにアクセスし、クライアント側を確認した。<br>
 今回のレポートではfasfttt.jsに絞って解説する。
 
-![alt text](images\DeadtoC2images/fastfttt.png)
+![alt text](images/DeadtoC2images/fastfttt.png)
 
 かなり難読化されたコードだが、よく見るとハイライト部分にBase64らしき文字列が埋め込まれているのがわかる。<br>
 デコードしてみると「https[:]//www[.]windowwashingexpert[.]com/lma.php」という文字列が出てきた。
@@ -40,18 +40,18 @@ mvjfkakfkfkaiai[.]comにアクセスすると、404エラーが返ってくる�
 lma.phpのウェブシェルを確認したが、レスポンスのクライアント側には特に目立つものはなかった。ファイルの中で実際に何が動いているのかを確認するには、内部に潜り込む必要がある。少し考えた末、BurpのIntruder Attackを使ったスクリプトインジェクションを試してみることにした。<br>
 よく使われるウェブシェルのペイロードリストを見つけてきて、祈りながら実行したところ……大当たりだった！
 
-![alt text](images\DeadtoC2images/payload-results.png)
+![alt text](images/DeadtoC2images/payload-results.png)
 
 「page」のレスポンスサイズが気になる。（画像にはURLの末尾/lma.phpが写っていないが、攻撃対象はそのPHPファイルだ。）<br>
 Repeaterに投げて何が返ってくるか見てみよう。
 
-![alt text](images\DeadtoC2images/page-results.png)
+![alt text](images/DeadtoC2images/page-results.png)
 
 レスポンスにはBase64とHTMLが含まれていた！<br>
 Base64は後回しにして、まずこのHTMLページが何を表示しているのか確認しよう。
 
-![alt text](images\DeadtoC2images/verify.png)
-![alt text](images\DeadtoC2images/verify2.png)
+![alt text](images/DeadtoC2images/verify.png)
+![alt text](images/DeadtoC2images/verify2.png)
 
 1枚目の画像にはCAPTCHA認証画面がある。「Verify you are human」というテキストとチェックボックスが決定的な証拠だ。ページ下部にはCloudflareの公式リンクも2つ掲載されている。これは明らかにCloudflareを装った偽CAPTCHAだ。
 
@@ -74,12 +74,12 @@ Base64：cG93ZXJzaGVsbCAtd2kgbWkgLUVQIEIgLWMgaWV4KGlybSAxOTMuMTExLjExNy4yMjYvVi5
 本当に欲しかったのはHTMLではなく、PHPのコードそのものだった。<br>
 そこでClaudeに相談したところ、BurpのRepeaterで別のリクエストを試してみることを提案された。正直なところ完全に棚ぼたで、そもそもそれを探していたわけでもなかったが、試してみると.....
 
-![alt text](images\DeadtoC2images/lamaba.png)
+![alt text](images/DeadtoC2images/lamaba.png)
 
 最初の/pageリクエストに加え、APIキーとエンドポイントが手に入った。これが今回のC2サーバーだ：lamabamatypod[.]com<br>
 そのページにアクセスすると、ログイン画面が現れた。
 
-![alt text](images\DeadtoC2images/C2login.png)
+![alt text](images/DeadtoC2images/C2login.png)
 
 以上だ！<br>
 閉鎖されたサイトから始まり、偽CAPTCHAを使ったマルウェア（LummaStealer系の亜種と思われる）を発見し、最終的には脅威アクターのC2サーバーまで辿り着いた！<br>
