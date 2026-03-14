@@ -20,7 +20,7 @@ The three files I looked at at the time are:<br>
 ・mvjfkakfkfkaiai[.]com/paoso.js<br>
 ・mvjfkakfkfkaiai[.]com/adasr.js<br>
 
-It was time to see what kind of code was hiding in these. So I went over to Burp to intercept.<br>
+It was time to see what kind of code was hiding in these. So I accessed them and inspected the client-side.<br>
 For this documentation, I'll only be focusing on fasfttt.js.
 
 ![alt text](DeadtoC2images/fastfttt.png)
