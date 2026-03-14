@@ -35,7 +35,7 @@ This is where Burp comes in handly. We'll intercept and see what we can pull fro
 
 As of typing, this link now returns a 404. However, it was online at the time which you'll see the timestamp in the screenshot below. The following screenshots were taken as I was investigating.
 
-Looking at the lma.php webshell, there was nothing in the response in particular that stood out. At least on the frontend side. If I wanted to see what was actually going on in that file, what was actually being loaded, I needed to get inside it. After some thinking, I figured this might be a good chance to try out some script injecting using Burp's Intruder Attack.<br>
+Looking at the lma.php webshell, there was nothing in the response in particular that stood out. At least on the client-side. If I wanted to see what was actually going on in that file, what was actually being loaded, I needed to get inside it. After some thinking, I figured this might be a good chance to try out some script injecting using Burp's Intruder Attack.<br>
 I found a small list of commonly used webshell payloads and crossed my fingers. And woah! Looks like I found something big!
 
 ![alt text](DeadtoC2images/payload-results.png)
@@ -51,7 +51,7 @@ Before we touch that base64, lets take a look at what this HTML page displaying.
 ![alt text](DeadtoC2images/verify.png)
 ![alt text](DeadtoC2images/verify2.png)
 
-In the first image we see that this is a CAPTCHA request. The "Verify you are human" and "checkbox" are our dead give aways. Near the bottom we also Cloudflare mentioned with two fo their official links. I think it's safe to say this is a fake CAPTCHA impersonating Cloudflare.
+In the first image we see that this is a CAPTCHA request. The "Verify you are human" and "checkbox" are our dead give aways. Near the bottom we also Cloudflare mentioned with two of their official links. I think it's safe to say this is a fake CAPTCHA impersonating Cloudflare.
 
 In the second image we get an idea of what happens when we click the checkbox.<br>
 First we get an error for "Unusual Web Traffic Detected" so we need you do the following 3 steps of pressing "Win +R" and copy and pasting whatever command is on your clipboard.<br>
