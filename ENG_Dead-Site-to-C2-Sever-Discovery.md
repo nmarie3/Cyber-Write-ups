@@ -10,7 +10,7 @@ Accessing mvjfkakfkfkaiai[.]com leads you to a 404 error.
 
 ![alt text](DeadtoC2images/error404.png)
 
-That's interesting. The site is live, so what's on it?<br>
+That's interesting. The sever exists, so what's on it?<br>
 A hunch told me to check Wayback Machine again and check if it got crawled. And lo and behold, we got some URL prefix results! (As of typing, the number of .js files has increased.)
 
 ![alt text](DeadtoC2images/mvj_wayback.png)
