@@ -33,7 +33,7 @@ I did briefly attempt to deobuscate the javascript as well, but all I could tell
 So now that we have this suspicious php webshell, what do we do with it? The javascript is already suspicious enough, but we still don't have anything to deem it malicious.<br>
 This is where Burp comes in handly. We'll intercept and see what we can pull from it.
 
-<u>As of typing, this link now returns a 404. However, it was online at the time which you'll see the timestamp in the screenshot below. The following screenshots were taken as I was investigating.</u>
+As of typing, this link now returns a 404. However, it was online at the time which you'll see the timestamp in the screenshot below. The following screenshots were taken as I was investigating.
 
 Looking at the lma.php webshell, there was nothing in the response in particular that stood out. At least on the frontend side. If I wanted to see what was actually going on in that file, what was actually being loaded, I needed to get inside it. After some thinking, I figured this might be a good chance to try out some script injecting using Burp's Intruder Attack.<br>
 I found a small list of commonly used webshell payloads and crossed my fingers. And woah! Looks like I found something big!
