@@ -4,8 +4,8 @@ Last month I was asked to look into a site that got blocked by an internet provi
 The site, "dkaksdaksortor[.]com" was dead upon access. So I was tasked to figure out what was on this site that caused it to be blocked.
 
 Since the site was dead, my first instinct was to check out the Wayback Machine to see if any bots had crawled the page. It was then that I noticed the page was redirecting me to a "mvjfkakfkfkaiai[.]com". I'm a month late in documenting this case, but as of typing, Wayback Machine doesn't redirect to that page anymore.<br>
-The most plausible reason why Wayback Machine redirected to the new site in the first place was because its DNS pointed to a small cloud storage like an S3 bucket (Amazon) or an R2 bucket (Cloudflare). Then when Wayback's crawler visited the site, it was forwarded to mvjfkakfkfkaiai[.]com instead.<br>
-As for why it doesn't redirect anymore, we can guess that the bucket simply got deleted.
+It's plausible that when Wayback's crawler visited an unrelated site that had this malicious ad loaded on it, it cached the .js file that was linked to it. That would explain how the redirect ended up in Wayback's records in the first place.<br>
+As for why it doesn't redirect anymore, the .js file was simply deleted.
 
 Accessing mvjfkakfkfkaiai[.]com leads you to a 404 error.
 
