@@ -1,4 +1,4 @@
-# TEPCO フィッシング解析レポート - 20260315
+# TEPCOフィッシング解析 - 20260315
 
 ### AIで翻訳されています。
 
@@ -31,7 +31,7 @@ PowerShell が実行されている箇所はこちら。
 
 ![alt text](images/TEPCO/executepowershell.png)
 
-この2つの文字列配列を見ると、ダミー文字列の合間に、コマンドの断片が混じり込んでいるのがわかる。見つかった部分をすべてハイライトしてある。断片的ではあるが、このコードが何をしようとしているか、少しずつ読み解いていけそうだ。
+下記の2つの文字列配列を見ると、ダミー文字列の合間に、コマンドの断片が混じり込んでいるのがわかる。見つかった部分をすべてハイライトしてある。断片的ではあるが、このコードが何をしようとしているか、少しずつ読み解いていけそうだ。
 
 ![alt text](images/TEPCO/fillertextQ.png)
 ![alt text](images/TEPCO/fillertextm.png)
@@ -91,17 +91,19 @@ C:\Windows\System32\WScript.exe" "C:\Users\admin\AppData\Local\Temp\Rar$DIa10032
 
 一連の感染の流れを整理するとこうなる：<br>
 TEPCO .jsファイル<br>
-    └── ENCRYPTED.ps1 をダウンロード・実行<br>
-            └── %TEMP% 内に RarDIa10032.37332とRarDIa10032.37332 と Rar
+&nbsp;└── ENCRYPTED.ps1 をダウンロード・実行<br>
+&nbsp;&nbsp;└── %TEMP% 内に RarDIa10032.37332とRarDIa10032.37332 と Rar
 DIa10032.37332とRarDIa10032.38073 を作成<br>
-                    └──  Rar$DIa10032.37332 の TEPCO.jsファイルを実行<br>
-                        └── H41MOD92.ps1 を実行<br>
-                                └── エラー<br>
-                                └── aspnet_compiler を呼び出し<br>
-                                        └── ペイロードをコンパイル<br>
-                        └── Rar$DIa10032.38073 の TEPCO.jsファイルを実行<br>
-                           └── 4L6MK5IT.ps1 を実行<br>
-                                 └── エラー
+&nbsp;&nbsp;&nbsp;└──  Rar$DIa10032.37332 の TEPCO.jsファイルを実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── H41MOD92.ps1 を実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── エラー<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── aspnet_compiler を呼び出し<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ペイロードをコンパイル<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── Rar$DIa10032.38073 の TEPCO.jsファイルを実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 4L6MK5IT.ps1 を実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── エラー
+
+とはいえ、これはあくまで私の見立てに過ぎない。
 
 aspnet_compiler が Snake YARA としてフラグされていたので、このマルウェアがどのようなものか調べてみよう。
 

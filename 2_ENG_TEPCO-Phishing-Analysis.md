@@ -1,6 +1,6 @@
-# TEPCO Phishing - 20260315
+# TEPCO Phishing Analysis - 20260315
 
-Today I have a file that was found as part of a phishing scam, impersonating TEPCO. The threat actors used social engineering by creating fake "toshiba-co.jp" emails to send a download link to files.fm where the malicious file was hosted. Your average phishing attempt. And now that I've got my hands on it, lets check it out!
+Today I have a file that was found as part of a phishing scam, impersonating TEPCO (Tokyo Electric Power Company). The threat actors used social engineering by creating fake "toshiba-co.jp" emails to send a download link to files.fm where the malicious file was hosted. Your average phishing attempt. And now that I've got my hands on it, lets check it out!
 
 After extracting the RAR folder, it's contents revealed a suspicious .js file. 
 
@@ -29,11 +29,10 @@ Here's a powershell being executed.
 
 ![alt text](images/TEPCO/executepowershell.png)
 
-And as we can see in these two string arrays, there a bunch of half-written commands mixed in with filler strings. I've highlighted all that I could find in the paragraph. But even with these being incomplete, I think we can slowly piece together what this code is trying to accomplish.
+And as we can see in these two string arrays below, there a bunch of half-written commands mixed in with filler strings. I've highlighted all that I could find in the paragraph. But even with these being incomplete, I think we can slowly piece together what this code is trying to accomplish.
 
 ![alt text](images/TEPCO/fillertextQ.png)
 ![alt text](images/TEPCO/fillertextm.png)
-
 
 Let's try piecing together a powershell command from the highlighted readable strings.<br>
 'powershel' + 'l.exe\%20-no' + 'p\%20-ep\%20byp' = **powershell.exe -nop -ep byp**
@@ -67,7 +66,7 @@ Now let's open up that aspnet file and see what's happening inside.
 
 ![alt text](images/TEPCO/aspnet.png)
 
-So an aspnet compiler for web apps on PC. It's considered an LOLBin (Livng of the Land), used by threat actors because it's a signed Microsoft.NET framework and can go undetected. This compiler is probably also what actually builds the malicious code, and does it under a native process to avoid detection.
+So an aspnet compiler is for web apps on PC. It's considered an LOLBin (Livng of the Land), used by threat actors because it's a signed Microsoft.NET framework and can go undetected. This compiler is probably also what actually builds the malicious code, and does it under a native process to avoid detection.
 
 Just by a glance at the results of this though, it appears to be stealing data from files and web browsers. What's also interesting in the Warning section, it mentions "possible usage of Discord/Telegram API detected". Perhaps those apps are being used as the C2 server.
 
@@ -94,16 +93,18 @@ At the end of that last powershell command though, there's a conhost.exe error c
 
 So here's a visual of the chain of events:<br>
 TEPCO .js file<br>
-    └── downloads & executes ENCRYPTED.ps1<br>
-            └── creates folders Rar$DIa10032.37332 & Rar$DIa10032.38073 into %TEMP%<br>
-                    └── executes Rar$DIa10032.37332 TEPCO.js file<br>
-                        └── executes H41MOD92.ps1<br>
-                                └── error
-                                └── invokes aspenet_complier<br>
-                                        └── compiles payload<br>
-                        └── executes Rar$DIa10032.38073 TEPCO.js file<br>
-                           └── executes 4L6MK5IT.ps1<br>
-                                 └── error
+&nbsp;└── downloads & executes ENCRYPTED.ps1<br>
+&nbsp;&nbsp;└── creates folders Rar$DIa10032.37332 & Rar$DIa10032.38073 into %TEMP%<br>
+&nbsp;&nbsp;&nbsp;└── executes Rar$DIa10032.37332 TEPCO.js file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── executes H41MOD92.ps1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── error
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── invokes aspenet_complier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── compiles payload<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── executes Rar$DIa10032.38073 TEPCO.js file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── executes 4L6MK5IT.ps1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── error
+
+But this is just my best assumption of how this works.
 
 Since the aspenet_complier was flagged as a Snake YARA, lets see what kind of malware that usually is.
 
