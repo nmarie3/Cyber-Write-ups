@@ -5,7 +5,7 @@ The site, "dkaksdaksortor[.]com" was dead upon access. So I was tasked to figure
 
 Since the site was dead, my first instinct was to check out the Wayback Machine to see if any bots had crawled the page. It was then that I noticed the page was redirecting me to a "mvjfkakfkfkaiai[.]com". I'm a month late in documenting this case, but as of typing, Wayback Machine doesn't redirect to that page anymore.<br>
 **If you visit dkaksdaksortor[.]com on Wayback Machine now, you're greeted with a 403 Forbidden error.**<br>
-**I'm not entirely sure why it doesn't redirect anymore, but it's possible since the .js files that were associated with it have been deleted, and so Wayback has no link back to it.**<br>
+**I'm not entirely sure why it doesn't redirect anymore, but it's possible that whatever Wayback crawled that was associated with the site has since expired or been deleted, and so Wayback has no link back to it.**<br>
 **At least, this is my best guess.**
 
 Accessing mvjfkakfkfkaiai[.]com leads you to a 404 error.
@@ -69,7 +69,7 @@ Lets dissect that.<br>
 ・iex(irm IP/file) downloads and immediately executes a remote script from the IP
 
 Well, I think we have proof now that our suspicious webshell is indeed malicious.<br>
-We can also assume that dkaksdaksortor[.]com was most likely used in a similar way as mvjfkakfkfkaiai[.]com (hosting malicious JavaScript code) due to its random spelling.
+We can also assume that dkaksdaksortor[.]com was most likely used in a similar way as mvjfkakfkfkaiai[.]com (hosting malicious JavaScript code) due to its random spelling. Either that, or it could have been a phishing ad front for email or a popup on a website.
 
 But we can do better than that. ....Right?<br>
 What I really wanted was the php code, not the HTML.<br>

