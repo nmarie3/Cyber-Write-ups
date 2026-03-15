@@ -37,13 +37,13 @@ PowerShell が実行されている箇所はこちら。
 ![alt text](images/TEPCO/fillertextm.png)
 
 ハイライトした読み取れる文字列からPowerShellコマンドを組み立ててみよう。<br>
-'powershel' + 'l.exe%20-no' + 'p%20-ep%20byp' = powershell.exe -nop -ep byp
+'powershel' + 'l.exe%20-no' + 'p%20-ep%20byp' = **powershell.exe -nop -ep byp**<br>
 最後の "ass" の部分が足りない。コード内を検索するとすぐに見つかるはずだ。
 
 ![alt text](images/TEPCO/filesearch.png)
 
 ビンゴ！<br>
-powershell.exe -nop -ep bypass -file<br>
+**powershell.exe -nop -ep bypass -file**<br>
 実行ポリシーのバイパスが行われていることが確認できた。<br>
 さらに後ろに \x20\x22 が連結されている。ファイルパスか……？
 正直なところ、ここまで分解してもまだ核心には届いていない。<br>
@@ -91,17 +91,17 @@ C:\Windows\System32\WScript.exe" "C:\Users\admin\AppData\Local\Temp\Rar$DIa10032
 
 一連の感染の流れを整理するとこうなる：<br>
 TEPCO .jsファイル<br>
-&nbsp;└── ENCRYPTED.ps1 をダウンロード・実行<br>
-&nbsp;&nbsp;└── %TEMP% 内に RarDIa10032.37332とRarDIa10032.37332 と Rar
+&nbsp;&nbsp;└── ENCRYPTED.ps1 をダウンロード・実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── %TEMP% 内に RarDIa10032.37332とRarDIa10032.37332 と Rar
 DIa10032.37332とRarDIa10032.38073 を作成<br>
-&nbsp;&nbsp;&nbsp;└──  Rar$DIa10032.37332 の TEPCO.jsファイルを実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;└── H41MOD92.ps1 を実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── エラー<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── aspnet_compiler を呼び出し<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ペイロードをコンパイル<br>
-&nbsp;&nbsp;&nbsp;&nbsp;└── Rar$DIa10032.38073 の TEPCO.jsファイルを実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 4L6MK5IT.ps1 を実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── エラー
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──  Rar$DIa10032.37332 の TEPCO.jsファイルを実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── H41MOD92.ps1 を実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── エラー<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── aspnet_compiler を呼び出し<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ペイロードをコンパイル<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Rar$DIa10032.38073 の TEPCO.jsファイルを実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 4L6MK5IT.ps1 を実行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── エラー
 
 とはいえ、これはあくまで私の見立てに過ぎない。
 

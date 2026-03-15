@@ -5,8 +5,7 @@ The site, "dkaksdaksortor[.]com" was dead upon access. So I was tasked to figure
 
 Since the site was dead, my first instinct was to check out the Wayback Machine to see if any bots had crawled the page. It was then that I noticed the page was redirecting me to a "mvjfkakfkfkaiai[.]com". I'm a month late in documenting this case, but as of typing, Wayback Machine doesn't redirect to that page anymore.<br>
 **If you visit dkaksdaksortor[.]com on Wayback Machine now, you're greeted with a 403 Forbidden error.**<br>
-**This would explain why it doesn't redirect anymore. The site was dead at the time of investigation and it found a redirect in the code somewhere.**<br>
-**But now the site is back up again as a 403, so no need to redirect.**<br>
+**I'm not entirely sure why it doesn't redirect anymore, but it's possible since the .js files that were associated with it have been deleted, and so Wayback has no link back to it.**<br>
 **At least, this is my best guess.**
 
 Accessing mvjfkakfkfkaiai[.]com leads you to a 404 error.

@@ -93,16 +93,16 @@ At the end of that last powershell command though, there's a conhost.exe error c
 
 So here's a visual of the chain of events:<br>
 TEPCO .js file<br>
-&nbsp;└── downloads & executes ENCRYPTED.ps1<br>
-&nbsp;&nbsp;└── creates folders Rar$DIa10032.37332 & Rar$DIa10032.38073 into %TEMP%<br>
-&nbsp;&nbsp;&nbsp;└── executes Rar$DIa10032.37332 TEPCO.js file<br>
-&nbsp;&nbsp;&nbsp;&nbsp;└── executes H41MOD92.ps1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── error
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── invokes aspenet_complier<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── compiles payload<br>
-&nbsp;&nbsp;&nbsp;&nbsp;└── executes Rar$DIa10032.38073 TEPCO.js file<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── executes 4L6MK5IT.ps1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── error
+&nbsp;&nbsp;└── downloads & executes ENCRYPTED.ps1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── creates folders Rar$DIa10032.37332 & Rar$DIa10032.38073 into %TEMP%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── executes Rar$DIa10032.37332 TEPCO.js file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── executes H41MOD92.ps1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── error<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── invokes aspenet_complier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── compiles payload<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── executes Rar$DIa10032.38073 TEPCO.js file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── executes 4L6MK5IT.ps1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── error
 
 But this is just my best assumption of how this works.
 
