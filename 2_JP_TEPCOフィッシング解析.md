@@ -23,7 +23,8 @@ http[:]//91.92.243.254:7777/91.92.243.254/vickytwo/ENCRYPTED[.]ps1
 
 ![alt text](images/TEPCO/iptops1.png)
 
-"shell" と "http" も確認できる。その上の部分は、文字列を連結して ActiveXObject を生成しているようだ。
+"shell" と "http" も確認できる。その上の部分は、文字列を連結して ActiveXObject を生成しているようだ。<br>
+これらは起動時に実行されるコマンドと思われ、永続化を目的とした手口だ。
 
 ![alt text](images/TEPCO/shellhttpactivex.png)
 
@@ -40,7 +41,7 @@ PowerShell が実行されている箇所はこちら。
 'powershel' + 'l.exe%20-no' + 'p%20-ep%20byp' = **powershell.exe -nop -ep byp**<br>
 最後の "ass" の部分が足りない。コード内を検索するとすぐに見つかるはずだ。
 
-![alt text](images/TEPCO/filesearch.png)
+![alt text](images/TEPCO/bypasssearch.png)
 
 ビンゴ！<br>
 **powershell.exe -nop -ep bypass -file**<br>
@@ -76,8 +77,8 @@ aspnet_compiler.exe はPC上でWebアプリをビルドするためのツール�
 
 まずコマンドラインを確認する：<br>
 C:\Windows\System32\WScript.exe" "C:\Users\admin\AppData\Local\Temp\Rar$DIa10032.37332\TEPCO_CCPP-26Q7305A-N23A.01-DETAILED-RQMT-RFQ.js<br>
-これで ENCRYPTED.ps1 が何をしていたか、だいたい見えてきた。Tempフォルダ内に Rar$DIa10032.37332 というフォルダを作成し、その中に元のファイルと同じ名前の TEPCO .js ファイルを生成したのだ。ファイル名を同じにしているのは、見かけ上は同一ファイルに見せかけるためだろう。ただ中身のスクリプトは別物のはずだ。このファイルが実行されると、HTTPリクエストを送信して H41MOD92.ps1 をTempフォルダにダウンロードし、PowerShellでそれを実行する。<br>
-このスクリプトが aspnet_compiler.exe を呼び出す役割を担っていると思われる——「アセンブリを動的にロードする」という動作からも読み取れる。
+これで ENCRYPTED.ps1 が何をしていたか、だいたい見えてきた。Tempフォルダ内に Rar$DIa10032.37332 というフォルダを作成し、その中に元のファイルと同じ名前の TEPCO .js ファイルを生成したのだ。ファイル名を同じにしているのは、見かけ上は同一ファイルに見せかけるためだろう。ただ中身のスクリプトは別物のはずだ。このファイルが実行されると、HTTPリクエストを送信して H41MOD92.ps1 をTempフォルダにダウンロードし、PowerShellでそれを実行する。このスクリプトが aspnet_compiler.exe を呼び出す役割を担っていると思われる——「アセンブリを動的にロードする」という動作からも読み取れる。<br>
+特にHTTP接続の詳細を見ると、.jsファイル内で見つかったのと同じ http[:]//91.92.243.254:7777/91.92.243.254/vickytwo/ENCRYPTED[.]ps1 に接続しようとしているのが確認できる。
 
 ![alt text](images/TEPCO/powershell1.png)
 

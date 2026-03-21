@@ -21,7 +21,8 @@ http[:]//91.92.243.254:7777/91.92.243.254/vickytwo/ENCRYPTED[.]ps1
 
 ![alt text](images/TEPCO/iptops1.png)
 
-Here we can see a "shell" and "http", and above that looks like a string concatenation to create ActiveXObject.
+Here we can see a "shell" and "http", and above that looks like a string concatenation to create ActiveXObject.<br>
+These appear to be startup commands, which is a persistence tactic.
 
 ![alt text](images/TEPCO/shellhttpactivex.png)
 
@@ -39,7 +40,7 @@ Let's try piecing together a powershell command from the highlighted readable st
 
 We're missing the last part which should help create the word "bypass". A quick lookup through the code though will soon reveal the missing part.
 
-![alt text](images/TEPCO/filesearch.png)
+![alt text](images/TEPCO/bypasssearch.png)
 
 BINGO!<br>
 **powershell.exe -nop -ep bypass -file**<br>
@@ -78,8 +79,8 @@ Lets focus on the two wscripts now.
 First, taking a look at that command line:<br>
 C:\Windows\System32\WScript.exe" "C:\Users\admin\AppData\Local\Temp\Rar$DIa10032.37332\TEPCO_CCPP-26Q7305A-N23A.01-DETAILED-RQMT-RFQ.js<br>
 We can guess what the original ENCRYPTED.ps1 script was doing now. It created the new folder Rar$DIa10032.37332 inside the Temp folder, then created another TEPCO .js file with the same name as the original. Perhaps keeping the file name the same as the downloaded one is to make it appear to be the same thing, but we can bet the script for this one is much different. When this file runs, it sends out an HTTP request to what we can assume to download the file H41MOD92.ps1 into the Temp folder.<br>
-Powershell then executes H41MOD92.ps1.<br>
-This is the script I suspect runs the aspnet_compiler.exe. "Dynamically loads an assembly."
+Powershell then executes H41MOD92.ps1. This is the script I suspect runs the aspnet_compiler.exe. "Dynamically loads an assembly."<vr>
+Looking at the HTTP connection details in particular, we can see that it's reaching out to the same http[:]//91.92.243.254:7777/91.92.243.254/vickytwo/ENCRYPTED[.]ps1 that was found in the .js file.<br>
 
 ![alt text](images/TEPCO/powershell1.png)
 
