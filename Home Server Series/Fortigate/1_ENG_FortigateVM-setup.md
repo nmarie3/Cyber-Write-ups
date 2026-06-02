@@ -157,6 +157,7 @@ config system interface
 end
 ```
 → port 2 is our LAN. port 1 is our WAN, aka vnet-wan facing the internet. Management is done on the LAN for security reasons because we don't want that exposed to the internet.<br>
+→ Make sure this ip address matches the same network you configured for "virbr-lan" earlier. Simply change the last octet for this.<br>
 → Make sure your LAN is on a different subnet from the WAN. Either change the third octlet or go with a 10.x.x.x or 172.x.x.x ip.
 
 Now make sure that port 1, our WAN, got an ip from our router.
@@ -201,6 +202,7 @@ config system interface
 end
 ```
 → If we don't allow https here, we won't have access to the GUI.<br>
+Note: This is not recommended for security reasons. Admin access should never be exposed via the WAN. But to access the GUI for now it'll surfice. When we set up a public ip in the next tutorial, we will remove https access.<br>
 → Allowing ping is mostly for troubleshooting purposes.
 
 After that we need to set up the default gateway too so Fortigate knows how to reach the internet.<br>
