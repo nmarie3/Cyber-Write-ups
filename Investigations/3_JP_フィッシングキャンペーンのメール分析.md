@@ -17,12 +17,12 @@ phishing.emlをテキストエディタで開くと、以下の内容が確認�
 ![alt text](images/VeryHao/subject.png)
 
 件名のbase64をデコードすると次のようになった: 株式会社xxxx<_recipient-name_>
-差出人は「Howell Steven」となっており、メールアドレスは: af47ghy899cm@hotmail.com
+差出人は「Howell Steven」となっており、メールアドレスは: af47ghy899cm[@]hotmail.com
 宛先は: <_recipient-name_>@xxxx.com
 
 ![alt text](images/VeryHao/replyto.png)
 
-ヘッダーの中には「Reply-To」アドレスとして barringtonbradley55@gmail.com が設定されているのも見つけた。<br>
+ヘッダーの中には「Reply-To」アドレスとして barringtonbradley55[@]gmail.com が設定されているのも見つけた。<br>
 つまり、差出人名・メールアドレス・返信先のいずれもが一致していないということだ。気になったので、その名前のアカウントが実在するか調べてみた——このアカウントは乗っ取られたものか、あるいは完全に架空のものである可能性がある。元の送信元アドレスはおそらく使い捨てのもので、受信者が返信しようとした場合、実際にはこのアクティブなGmailアカウントにルーティングされる仕組みになっていると思われる。
 
 Kaliの仮想マシンを立ち上げ、まず`holehe`を使ってこのアカウントが120以上のサイトのデータベースのどこかに存在するか調べてみた。結果は1件もヒットなし。<br>

@@ -42,13 +42,11 @@ We can already see what might be going on here, but let's keep going with the in
 
 What we need to figure out now is what's going on with that folder.
 
-![alt text](images/DLL-sideloading/storyline-report2.png)
-
 In the the following images I found through the Event Search, we can see that there is first a file creation of the folder `ca76c290` in AppData\Roaming\Microsoft. From there, RuntimeBroker.exe is created. If it were the real runtimebroker.exe, it should only be coming from the System32 folder. Following that is the creation of nvdaHelperRemote.dll in the same folder. After that, a task scheduler was created.
 
 ![alt text](images/DLL-sideloading/folder-create.png)
 ![alt text](images/DLL-sideloading/broker-creation.png)
-![alt text](images/DLL-sideloading/nvda-helper-remote.png>)
+![alt text](images/DLL-sideloading/nvda-helper-remote.png)
 ![alt text](images/DLL-sideloading/schtasks-details.png)
 
 We know that the RuntimeBroker is really an NVDA file, so let's check the file hash of the created nvdaHelperRemote.dll in VirusTotal.

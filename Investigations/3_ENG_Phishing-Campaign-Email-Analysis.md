@@ -17,12 +17,12 @@ There's a large chunk of base64 in here, along with some 8-bit encoded sections.
 ![alt text](images/VeryHao/subject.png)
 
 Decoding the base64 subject line gives us: 株式会社xxxx<_recipient-name_>
-The sender is listed as "Howell Steven," using the email address: af47ghy899cm@hotmail.com
+The sender is listed as "Howell Steven," using the email address: af47ghy899cm[@]hotmail.com
 Addressed to: <_recipient-name_>@xxxx.com
 
 ![alt text](images/VeryHao/replyto.png)
 
-In the header I also noticed a "Reply-To" address set to barringtonbradley55@gmail.com.<br>
+In the header I also noticed a "Reply-To" address set to barringtonbradley55[@]gmail.com.<br>
 So, the sender name, email address, and repy-to, none of these match the other. Curious, I looked into whether an account under that name existed — it's possible this is either a compromised account or an entirely fabricated one. The original sender address is likely disposable, meaning if the recipient tried to reply, the response would actually route to this active Gmail account instead. 
 
 I booted up my Kali vm and first I tried using `holehe` to do a search if an account was found on any 120+ sites in its database. There was not a single match.<br>

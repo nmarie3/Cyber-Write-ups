@@ -10,28 +10,32 @@ Write-ups are added/updated periodically and at random when I have the time. My 
 This folder consists of a few malware/phishing/OSINT/forensics investigations I've done.<br>
 Some may be related to on the job incidents, while others are personal investigations for study purposes.
 
-Current files:
-├── Dead Site to C2 Server Discovery
-├── Static and Dynamic File Analysis
-├── Phishing Campaign Email Analysis
+<pre style="background:none; border:none; padding:0; font-family:monospace; line-height:1.2;">
+Current files:<br>
+├── Dead Site to C2 Server Discovery<br>
+├── Static and Dynamic File Analysis<br>
+├── Phishing Campaign Email Analysis<br>
 ├── DLL Sideloading Phishing Log Analysis
+</pre>
 
 ## Home Lab Folder
 
 This folder consists of at-home tests for just about anything I want to learn or try doing.<br>
 Some of these projects will be SIEM/EDR alerts-related, while others are curiousity projects.
 
-Current directories and files:
-├── QRadar Series
-│   └── QRadar Community Edition Installation Setup
-├── Fortigate
-│   ├── Fortigate VM Setup.md
-│   ├── IPSec VPN Port-Forwarding
-│   ├── Site-to-Site IPSec VPN
-│   ├── Dialup IPSec VPN
+<pre style="background:none; border:none; padding:0; font-family:monospace; line-height:1.2;">
+Current directories and files:<br>
+├── QRadar Series<br>
+│   └── QRadar Community Edition Installation Setup<br>
+├── Fortigate<br>
+│   ├── Fortigate VM Setup.md<br>
+│   ├── IPSec VPN Port-Forwarding<br>
+│   ├── Site-to-Site IPSec VPN<br>
+│   ├── Dialup IPSec VPN<br>
+│   └── WIP<br>
+├── Web Server<br>
 │   └── WIP
-├── Web Server
-│   └── WIP
+</pre>
 
 ## CTF Folder
 

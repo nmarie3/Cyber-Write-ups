@@ -10,28 +10,32 @@ write-upは、時間があるときに不定期に追加・更新しています
 このフォルダには、これまでに行ったマルウェア/フィッシング/OSINT/フォレンジック調査がいくつか収録されています。<br>
 中には実務上のインシデントに関連するものもあれば、学習目的で行った個人的な調査もあります。
 
-現在のファイル:
-├── 閉鎖サイトからC2サーバー発見まで
-├── 静的・動的マルウェア分析
-├── フィッシングキャンペーンのメール分析
+<pre style="background:none; border:none; padding:0; font-family:monospace; line-height:1.2;">
+現在のファイル:<br>
+├── 閉鎖サイトからC2サーバー発見まで<br>
+├── 静的・動的マルウェア分析<br>
+├── フィッシングキャンペーンのメール分析<br>
 ├── DLLサイドローディングによるフィッシングログ分析
+</pre>
 
 ## Home Labフォルダ
 
 このフォルダには、学びたいことや試してみたいことを自宅環境で検証したものが収録されています。<br>
 SIEM/EDRのアラートに関連するプロジェクトもあれば、単なる興味本位のプロジェクトもあります。
 
-現在のディレクトリとファイル:
-├── QRadar Series
-│   └── QRadar Community Edition インストール手順
-├── Fortigate
-│   ├── FortigateVMインストール手順
-│   ├── IPSec VPN ポートフォワーディング
-│   ├── サイト間IPSec VPN
-│   ├── リモートIPSec VPN
+<pre style="background:none; border:none; padding:0; font-family:monospace; line-height:1.2;">
+現在のディレクトリとファイル:<br>
+├── QRadar Series<br>
+│   └── QRadar Community Edition インストール手順<br>
+├── Fortigate<br>
+│   ├── FortigateVMインストール手順<br>
+│   ├── IPSec VPN ポートフォワーディング<br>
+│   ├── サイト間IPSec VPN<br>
+│   ├── リモートIPSec VPN<br>
+│   └── WIP<br>
+├── Web Server<br>
 │   └── WIP
-├── Web Server
-│   └── WIP
+</pre>
 
 ## CTFフォルダ
 
