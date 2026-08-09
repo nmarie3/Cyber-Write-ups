@@ -180,7 +180,7 @@ Password: w8zt3a
 またしても、ToolsUnlock.exeへのDropboxリンクと、その下にパスワードが!!!<br>
 基本的に、フォレンジックチームが発見したのと全く同じファイルでした!!!
 
-![alt text](images/Infostealer-darkweb/download-txt.png)
+![alt text](images/Infostealer-darkweb/download-txt.png)<br>
 ![alt text](images/Infostealer-darkweb/link-txt.png)
 
 というわけで、これで判明しました!<br>

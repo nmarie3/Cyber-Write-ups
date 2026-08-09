@@ -179,7 +179,7 @@ The file that was downloaded was a .txt file called "Resource_Link.txt". And the
 And it was another Dropbox link to ToolsUnlock.exe and under it a password!!!<br>
 Basically the same exact file the forensics team had discovered!!!
 
-![alt text](images/Infostealer-darkweb/download-txt.png)
+![alt text](images/Infostealer-darkweb/download-txt.png)<br>
 ![alt text](images/Infostealer-darkweb/link-txt.png)
 
 AND THERE YOU HAVE IT!<br>
