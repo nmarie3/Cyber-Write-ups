@@ -6,10 +6,10 @@ A little bit of background on this investigation: There was a device infected wi
 This investigation itself was long as I tried to work with what little I had, but I thought it was important enough to document my process as I was able to use Flare and dive deep into QRadar network logs.<br>
 
 So let's start from the beginning.<br>
-We were informed of a user's personal details leaked on the darkweb. Although the forensic's department had collected the infected devices and would be handling the case, the SOC team was asked to look into suspicious traffic revolving a certain URL on that network.<br>
+We were informed of a user's personal details leaked on the darkweb. Although the forensics department had collected the infected devices and would be handling the case, the SOC team was asked to look into suspicious traffic revolving a certain URL on the network.<br>
 Thanks to that request, this incident immediately grabbed my attention, and so I decided to dig deeper and do my own investigation.
 
-Note: Because this investigation was done of my own accord, I was not shared any extra information from the forensics department and only had access to a our Flare account and QRadar network logs to work with.<br>
+Note: Because this investigation was done of my own accord, I was not shared any extra information from the forensics department and only had access to our Flare account and QRadar network logs to work with.<br>
 Those results are as follows.
 
 ## The Investigation
@@ -71,7 +71,6 @@ In the public pcap there was a strange URL that seemed to be communicating with 
 It's unclear what role the Steam profile played exactly (perhaps there was a link or payload in the comment section to connect to the strange site), but there was no doubt that this wasn't just a coincidence.<br>
 Since I had confirmed the presence of the Telegram traffic (same ip address), I was curious if the same behavior could be found in the network logs I had. I edited my QRadar search to include the local ip of the device the Telegram traffic was found, set the time frame for 1:15~1:45, the timeframe the Telegram traffic occured, and searched for anything with the word "steam" in the payload. And BINGO! Steam community traffic was found!
 
-[Note: The host name for this was indeed steamcommunity.com, I forgot to include the hostname catergory in the screenshot.]
 ![alt text](images/Infostealer-darkweb/steam-traffic.png)
 
 If Steam traffic was confirmed, then next there had to be an unusual website hitting the firewall, right?<br>
