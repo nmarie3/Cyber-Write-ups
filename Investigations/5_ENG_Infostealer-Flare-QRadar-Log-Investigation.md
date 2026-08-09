@@ -1,7 +1,9 @@
 # Infostealer: Flare & QRadar Log Investigation - 20260807
 
- A little bit of background on this investigation: There was a device infected with infostealer malware. We became aware of this because their stolen data was found on the dark web (thanks to Flare we confirmed this). <br>
- This investigation itself was long as I tried to work with what little I had, but I thought it was important enough to document my process as I was able to use Flare and dive deep into QRadar network logs.<br>
+Note: This investigation has been updated on 2026/08/09 below the original investigation. Spoiler: The original download source was found.
+
+A little bit of background on this investigation: There was a device infected with infostealer malware. We became aware of this because their stolen data was found on the dark web (thanks to Flare we confirmed this). <br>
+This investigation itself was long as I tried to work with what little I had, but I thought it was important enough to document my process as I was able to use Flare and dive deep into QRadar network logs.<br>
 
 So let's start from the beginning.<br>
 We were informed of a user's personal details leaked on the darkweb. Although the forensic's department had collected the infected devices and would be handling the case, the SOC team was asked to look into suspicious traffic revolving a certain URL on that network.<br>
@@ -99,16 +101,16 @@ Looking at the bytes sent, it's hard to say for sure whether or not this was use
 So, let's look at the timeline.<br>
 <pre style="background:none; border:none; padding:0; font-family:monospace; line-height:1.2;">
 6/16<br>
-│   ├── 1:17:45 First communication with Telegram (@turb00m)<br>
-│       ├── 1:17:46 First communication with Steam (76561198689449626)<br>
-│           ├── 1:17:51 First communication with Blocked Site (sip.rzrent)<br>
-│           └── 1:24:40 Last communication with Blocked Site<br>
-│           ├── 1:29:17 First communication with Passed Site (en.taiwebs)<br>
-│           └── 1:36:00 Last communication with Passed Site<br>
-│       └── 1:38:09 Last communication with Steam<br>
-│   └── 1:38:15 Last communication with Telegram<br>
-│       ├── 1:41:26 First communication with Russian IP (yandex)<br>
-│       └── 1:43:35 Last communication with Russian IP<br>
+│   ├── 13:17:45 First communication with Telegram (@turb00m)<br>
+│       ├── 13:17:46 First communication with Steam (76561198689449626)<br>
+│           ├── 13:17:51 First communication with Blocked Site (sip.rzrent)<br>
+│           └── 13:24:40 Last communication with Blocked Site<br>
+│           ├── 13:29:17 First communication with Passed Site (en.taiwebs)<br>
+│           └── 13:36:00 Last communication with Passed Site<br>
+│       └── 13:38:09 Last communication with Steam<br>
+│   └── 13:38:15 Last communication with Telegram<br>
+│       ├── 13:41:26 First communication with Russian IP (yandex)<br>
+│       └── 13:43:35 Last communication with Russian IP<br>
 </pre>
 
 In total the actual attack was about 20 minutes (excluding the russian ip). If the first blocked site had been successful, it would have been shorter. But this also means that the threat actor probably had to manually adjust their attack method to get through. I doubt it was automated because there was about a 5 minute gap between the block and success.
@@ -129,7 +131,64 @@ I found this blog to be good at explaining what it does. It also mentions the sa
 
 And so, that is how I went from simply having stolen data on the dark web to a full-blown network investigation. This investigation in particular was incredibly fun to do. It really felt like I was desperately collecting puzzle pieces to then figure out how it all logically fits together, and seeing the mess/history of the situation unfold in front of me.
 
-## Bonus Digging
+## Update 2026/08/09
+
+Good news, the forensics team shared a short report of their investigation on the infected device.<br>
+They had also came to the conclusion that the root of the infection was a ToolsUnlock.exe file. During their investigation, they found a file called `Get_Link.txt` that was created in the user's Downloads folder on `6/16 13:16:15`.<br>
+Inside this file was a Dropbox link to a ToolsUnlock.zip and a password to extract it. The following:
+```
+hxxp[:]//www.dropbox[.]com/scl/fl/hskmvo1wjh2sgkoagdcvq/ToolsUnlock.zip?rlkey=vz3y5ii3i8yh606rpsrbjc88d&st=v13baa5c&dl=1
+Password: w8zt3a
+```
+
+So they identified where the ToolsUnlock file was downloaded from, BUT they also said they couldn't figure out where this "Get_Link.txt" file came from. And they just gave up there.<br>
+Well, if it's in the Downloads folder, it was downloaded somewhere. I got curious. So I wanted to go have another look on Flare at the user's search history.... but then I found out the forensics team (who had the admin account) revoked the SOC team's guest account priveleges to view those details. Oh great, a dead end.
+
+Or so I thought.
+
+I was determined to find this mysterious file. So I stared down the network logs again. First I searched for any Dropbox traffic. Bingo, found. And the bytes recieved clearly screamed that something was being downloaded. This had to be ToolsUnlock.exe.
+
+![alt text](images/Infostealer-darkweb/dropbox.png)
+
+Okay, so I confirmed Dropbox. But where did the user get this link?<br>
+I moved my attention to the time the forensics team said the file was created. And..... I found a possible lead.<br>
+
+![alt text](images/Infostealer-darkweb/gdrive.png)
+
+There was a log for `drive.usercontent.google.com`. This meant there was something downloaded from a Google Drive. And considering the time lined up just perfectly with the forensics team's report, I felt confident that this had to be the smoking gun. The only issue was.... this log only had the hostname. The log payload didn't have the full download link. All I knew was that something was downloaded from Drive and I have no idea where this Drive download came from. Another dead end.
+
+Except I'm stubbon.<br>
+I was determined to find that Drive link. After trying all sorts of attempts, I eventually decided to search for the Dropbox folder name, `hskmvo1wjh2sgkoagdcvq`, in Google. And in the results I saw a Malware Bazaar link. I decided to click it. I scholled down to the bottom and noticed a comment...
+
+![alt text](images/Infostealer-darkweb/malbazaar.png)
+
+BINGO!<br>
+Same folder name, also calls Telegram, and has a malicious website (one I recongized from the public pcap)!<br>
+And there at the very beginning was a GitHub link for a Dr.Fone Repair.<br>
+So I gave the GitHub a visit.
+
+![alt text](images/Infostealer-darkweb/drfone.png)
+
+From appearances it looks like a normal git repository. I clicked around. It was posted in 2025.<br>
+And then.... I hovered over the "Download" link.
+
+![alt text](images/Infostealer-darkweb/drive-link.png)
+
+THERE IT WAS!!!<br>
+It was a `drive.usercontent` link! I was excited. I clicked download.<br>
+The file that was downloaded was a .txt file called "Resource_Link.txt". And then I opened it......<br>
+And it was another Dropbox link to ToolsUnlock.exe and under it a password!!!<br>
+Basically the same exact file the forensics team had discovered!!!
+
+![alt text](images/Infostealer-darkweb/download-txt.png)
+![alt text](images/Infostealer-darkweb/link-txt.png)
+
+AND THERE YOU HAVE IT!<br>
+The user was originally trying to download a cracked version of Dr.Fone Repair, but the GitHub repo they downloaded from was a fake to lure visitors to download their ToolsUnlock malware!<br>
+Mystery solved!!
+
+
+## Bonus Digging (Before Update)
 
 Just for fun (and desperate hope maybe I'd learn something new), I tried examining the malicious file (ToolsUnlock_v6.9).<br>
 In the first image, I ran the .exe file through Detect It Easy.<br>
