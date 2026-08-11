@@ -15,7 +15,8 @@ Current files:<br>
 ├── Dead Site to C2 Server Discovery<br>
 ├── Static and Dynamic File Analysis<br>
 ├── Phishing Campaign Email Analysis<br>
-├── DLL Sideloading Phishing Log Analysis
+├── DLL Sideloading Phishing Log Analysis<br>
+├── Infostealer-Flare-QRadar-Log-Investigation
 </pre>
 
 ## Home Lab Folder

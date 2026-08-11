@@ -141,7 +141,7 @@ Password: w8zt3a
 ```
 
 So they identified where the ToolsUnlock file was downloaded from, BUT they also said they couldn't figure out where this "Get_Link.txt" file came from. And they just gave up there.<br>
-Well, if it's in the Downloads folder, it was downloaded somewhere. I got curious. So I wanted to go have another look on Flare at the user's search history.... but then I found out the forensics team (who had the admin account) revoked the SOC team's guest account priveleges to view those details. Oh great, a dead end.
+Well, if the .txt file is located in the Downloads folder, it was downloaded somewhere. I got curious. So I wanted to go have another look on Flare at the user's search history.... but then I found out the forensics team (who had the admin account) revoked the SOC team's guest account priveleges to view those details. Oh great, a dead end.
 
 Or so I thought.
 
