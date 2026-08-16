@@ -1,6 +1,6 @@
 # Infostealer: Flare & QRadar Log Investigation - 20260807
 
-Note: This investigation has been updated on 2026/08/09 below the original investigation. Spoiler: The original download source was found.
+Note: This investigation has been updated on 2026/08/09 and 2026/08/16 below the original investigation. Spoiler: The original download source was found.
 
 A little bit of background on this investigation: There was a device infected with infostealer malware. We became aware of this because their stolen data was found on the dark web (thanks to Flare we confirmed this). <br>
 This investigation itself was long as I tried to work with what little I had, but I thought it was important enough to document my process as I was able to use Flare and dive deep into QRadar network logs.<br>
@@ -184,8 +184,26 @@ Basically the same exact file the forensics team had discovered!!!
 
 AND THERE YOU HAVE IT!<br>
 The user was originally trying to download a cracked version of Dr.Fone Repair, but the GitHub repo they downloaded from was a fake to lure visitors to download their ToolsUnlock malware!<br>
-Mystery solved!!
 
+## Update 2026/08/16
+
+More good news. I was given access to Flare logs again, so I had one final look to see if there was a Dr.Fone github link anywhere. Which I did not find.
+
+BUT! I did find a different github link, one for a cracked version of DMDE software. This also being cracked, I went to the link to see if it was similar to the fake Dr.Fone repo.
+
+![alt text](images/Infostealer-darkweb/flare-log2.png)
+![alt text](images/Infostealer-darkweb/dmde.png)
+
+The github for DMDE looked an aweful lot like the Dr.Fone repo. It even included a download link.<br>
+So I hovered over that, downloaded, and there it was again! A dropbox link to ToolsUnlock!!
+
+![alt text](images/Infostealer-darkweb/dmde-drive.png)<br>
+![alt text](images/Infostealer-darkweb/getlink.png)<br>
+![alt text](images/Infostealer-darkweb/getlink-dropbox.png)
+
+So the real malicious site where ToolsUnlock was downloaded from was the DMDE Crack github and not Dr.Fone.<br>
+But it's thanks to me finding the Dr.Fone connection that I was able to piece together these clues.<br>
+Mystery solved!!
 
 ## Bonus Digging (Before Update)
 

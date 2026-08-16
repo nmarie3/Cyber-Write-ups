@@ -1,6 +1,6 @@
 # インフォスティーラー: Flare & QRadar ログ調査 - 20260807
 
-※この調査は2026/08/09に、元の調査内容の下に追記という形で更新されています。ネタバレ:元のダウンロード元が判明しました。
+※この調査は2026/08/09また2026/08/16に、元の調査内容の下に追記という形で更新されています。ネタバレ:元のダウンロード元が判明しました。
 
 この調査についての簡単な背景を説明します。あるデバイスがインフォスティーラー(情報窃取型)マルウェアに感染していました。この件を知ったきっかけは、盗まれたデータがダークウェブ上で見つかったことです(Flareのおかげで確認できました)。<br>
 今回の調査はかなり長丁場でしたが、手持ちの情報だけでどこまでやれるか試してみたので、その過程をきちんと記録しておく価値があると思いました。FlareとQRadarのネットワークログを使って、深く掘り下げることができたので。<br>
@@ -60,7 +60,7 @@ Contacted IP addressesのセクションまでスクロールすると、1つの
 [プライベートスキャンpcap]<br>
 ![alt text](images/Infostealer-darkweb/private-pcap.png)
 
-[パブリックpcap]<br>
+[公開pcap]<br>
 ![alt text](images/Infostealer-darkweb/public-pcap.png)
 
 ![alt text](images/Infostealer-darkweb/telegram.png)
@@ -185,6 +185,25 @@ Password: w8zt3a
 
 というわけで、これで判明しました!<br>
 このユーザーはもともとDr.Fone Repairのクラック版をダウンロードしようとしていたのですが、ダウンロード元だったGitHubリポジトリは偽物で、訪問者をToolsUnlockマルウェアのダウンロードへと誘導するために作られたものだったのです!<br>
+
+## 更新 2026/08/16
+
+さらに嬉しい知らせです。再びFlareのログにアクセスできるようになったので、最後にもう一度Dr.Fone関連のGitHubリンクがどこかにないか確認してみました。結果は、見つかりませんでした。
+
+でも!代わりに、別のGitHubリンクを見つけました。DMDEソフトウェアのクラック版へのリンクです。こちらもクラック版だったので、偽Dr.Foneリポジトリと似たような作りになっていないか確認しに、リンク先を見に行きました。
+
+![alt text](images/Infostealer-darkweb/flare-log2.png)
+![alt text](images/Infostealer-darkweb/dmde.png)
+
+DMDEのGitHubは、Dr.Foneのリポジトリと恐ろしいほどそっくりでした。ダウンロードリンクまで含まれていました。<br>
+そこでそのリンクにカーソルを合わせ、ダウンロードしてみると、またしても出てきました!ToolsUnlockへのDropboxリンクです!!
+
+![alt text](images/Infostealer-darkweb/dmde-drive.png)<br>
+![alt text](images/Infostealer-darkweb/getlink.png)<br>
+![alt text](images/Infostealer-darkweb/getlink-dropbox.png)
+
+つまり、ToolsUnlockが実際にダウンロードされた本当の悪意あるサイトは、Dr.FoneではなくDMDE CrackのGitHubだったということです。<br>
+ただ、最初にDr.Foneとのつながりを見つけていたからこそ、これらの手がかりをつなぎ合わせることができました。<br>
 謎は解けました!!
 
 

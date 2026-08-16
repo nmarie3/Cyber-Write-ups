@@ -12,11 +12,11 @@ Some may be related to on the job incidents, while others are personal investiga
 
 <pre style="background:none; border:none; padding:0; font-family:monospace; line-height:1.2;">
 Current files:<br>
-├── Dead Site to C2 Server Discovery<br>
-├── Static and Dynamic File Analysis<br>
-├── Phishing Campaign Email Analysis<br>
-├── DLL Sideloading Phishing Log Analysis<br>
-├── Infostealer-Flare-QRadar-Log-Investigation
+├── 1. Dead Site to C2 Server Discovery<br>
+├── 2. Static and Dynamic File Analysis<br>
+├── 3. Phishing Campaign Email Analysis<br>
+├── 4. DLL Sideloading Phishing Log Analysis<br>
+├── 5. Infostealer, Flare, QRadar Log Investigation
 </pre>
 
 ## Home Lab Folder
